@@ -15,7 +15,7 @@ public:
 
     }
 
-    Rational add(const Rational& num2) {
+    Rational add(const Rational& num2) const {
 
         int newP = this->p + num2.p;
         int newQ = (this->q * num2.q) + (num2.q * this->q);
@@ -26,7 +26,7 @@ public:
 
     }
 
-    Rational sub(const Rational& num2) {
+    Rational sub(const Rational& num2) const {
 
         int newP = this->p - num2.p;
         int newQ = (this->q * num2.q) - (num2.q * this->q);
@@ -37,7 +37,7 @@ public:
 
     }
 
-    Rational multiply(const Rational& num2) {
+    Rational multiply(const Rational& num2) const {
 
         int newP = this->p * num2.p;
         int newQ = this->q * num2.q;
@@ -48,7 +48,7 @@ public:
 
     }
 
-    Rational divide(const Rational& num2) {
+    Rational divide(const Rational& num2) const {
 
         int newP = this->p * num2.q;
         int newQ = this->q * num2.p;
@@ -59,7 +59,7 @@ public:
 
     }
 
-    void print() {
+    void print() const {
 
         std::cout << p << '/' << q << std::endl;
 
