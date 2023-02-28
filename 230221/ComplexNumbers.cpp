@@ -4,11 +4,11 @@ class Complex {
 
 private:
 
-    int realPart, imagPart;
+    double realPart, imagPart;
 
 public:
 
-    Complex(int rp, int imp) {
+    Complex(const double rp = 0, const double imp = 0) {
 
         realPart = rp;
         imagPart = imp;
@@ -17,8 +17,8 @@ public:
 
     Complex add(const Complex& comp) const {
 
-        int newRealPart = this->realPart + comp.realPart;
-        int newImPart = this->imagPart + comp.imagPart;
+        double newRealPart = this->realPart + comp.realPart;
+        double newImPart = this->imagPart + comp.imagPart;
 
         return Complex(newRealPart, newImPart);
 
@@ -26,22 +26,34 @@ public:
 
     Complex sub(const Complex& comp) const {
 
-        int newRealPart = this->realPart - comp.realPart;
-        int newImPart = this->imagPart - comp.imagPart;
+        double newRealPart = this->realPart - comp.realPart;
+        double newImPart = this->imagPart - comp.imagPart;
 
         return Complex(newRealPart, newImPart);
 
     }
 
+    Complex negate() const {
+
+        return Complex{-1 * realPart, -1 * imagPart};
+
+    }
+
+    Complex conjugate() const {
+
+        return Complex{realPart, -1 * imagPart};
+
+    }
+
     Complex multiply(const Complex& comp) const {
 
-        int help1 = this->realPart * comp.realPart;
-        int help2 = this->realPart * comp.imagPart;
-        int help3 = this->imagPart * comp.realPart;
-        int help4 = this->imagPart * comp.imagPart * -1;
+        double help1 = this->realPart * comp.realPart;
+        double help2 = this->realPart * comp.imagPart;
+        double help3 = this->imagPart * comp.realPart;
+        double help4 = this->imagPart * comp.imagPart * -1;
 
-        int newRealPart = help1 + help4;
-        int newImPart = help2 + help3;
+        double newRealPart = help1 + help4;
+        double newImPart = help2 + help3;
 
         return Complex(newRealPart, newImPart);
 
@@ -49,12 +61,12 @@ public:
 
     Complex divide(Complex& comp) const {
 
-        Complex cong(comp.realPart, -1 * comp.imagPart);
+        Complex cong = comp.conjugate();
         Complex top = this->multiply(cong);
         Complex bottom = comp.multiply(cong);
 
-        int newRealPart = top.realPart / bottom.realPart;
-        int newImPart = top.imagPart / bottom.realPart;
+        double newRealPart = top.realPart / bottom.realPart;
+        double newImPart = top.imagPart / bottom.realPart;
 
         return Complex(newRealPart, newImPart);
 

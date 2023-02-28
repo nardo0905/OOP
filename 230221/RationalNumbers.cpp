@@ -8,7 +8,7 @@ private:
 
 public:
 
-    Rational(int p, int q) {
+    Rational(const int p = 0, const int q = 1) {
 
         this->p = p;
         this->q = q;
