@@ -16,30 +16,24 @@ bool isBalanced(std::string& sentence) {
                 break;
             
             case ')':
-                if (openBrackets.back() == '(') {
-
-                    openBrackets.pop_back();
-                    break;
-
+                if (openBrackets.back() != '(') {
+                    return false;
                 }
-                return false;
             case '}':
-                if (openBrackets.back() == '{') {
-
-                    openBrackets.pop_back();
-                    break;
-
+                if (openBrackets.back() != '{') {
+                    return false;
                 }
-                return false;
             case ']':
                 if (openBrackets.back() == '[') {
-
-                    openBrackets.pop_back();
-                    break;
-
+                    return false;
                 }
-                return false;
+                
+            openBrackets.pop_back();
+            break;
 
+            default:
+                break;
+            
         }
 
     }
