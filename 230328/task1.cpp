@@ -51,7 +51,7 @@ int main() {
     std::ofstream fout("temperature_results.csv");
     fout << "Year," << "Measurements Count," << "Avg. Temp," << "Date recorded," << "Min. temp.," << "Date recorded," << "Max. temp." << std::endl;
 
-    if (!fin) {
+    if (!fin || !fout) {
 
         std::cerr << "File not found!" << std::endl;
         return 1;
