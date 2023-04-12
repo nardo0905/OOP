@@ -50,7 +50,9 @@ public:
 
     const char* getType() const;
     const char* getPref() const;
+    int getEnvType() const;
     int getFreq() const;
+    bool equalTypes(const Plant&) const;
 
     void setEnv(int env) {
 
@@ -64,12 +66,14 @@ public:
         
     }
 
+    bool operator<(const Plant&) const;
+
     friend std::istream& operator>>(std::istream&, Plant&);
     friend std::ostream& operator<<(std::ostream&, Plant&);
 
 };
 
-Plant::Plant(const char* type) {
+Plant::Plant(const char* type) : envType(-1), wateringFrequency(-1) {
     
     this->type = new char[strlen(type) + 1];
     strcpy(this->type, type);
@@ -136,15 +140,33 @@ const char* Plant::getPref() const {
     
 }
 
+int Plant::getEnvType() const {
+
+    return envType;
+
+}
+
 int Plant::getFreq() const {
 
     return this->wateringFrequency;
     
 }
 
+bool Plant::equalTypes(const Plant& other) const {
+
+    return !strcmp(this->type, other.type);
+
+}
+
+bool Plant::operator<(const Plant& other) const {
+
+    return strcmp(this->type, other.type) < 0;
+    
+}
+
 std::ostream& operator<<(std::ostream& os, Plant& obj) {
 
-    os << obj.type << " " << obj.env[obj.envType] << " " << obj.wateringFrequency;
+    os << strlen(obj.type) << ' ' << obj.type << ' ' << /* obj.getPref() */ obj.getEnvType() << ' ' << obj.wateringFrequency;
 
     return os;
     
@@ -152,14 +174,12 @@ std::ostream& operator<<(std::ostream& os, Plant& obj) {
 
 std::istream& operator>>(std::istream& is, Plant& obj) {
 
-    char temp[256];
-    is.getline(temp, 256);
-    obj.deletePlant();
-    obj.type = new char[strlen(temp) + 1];
-    strcpy(obj.type, temp);
-
-    is >> obj.envType;
-    is >> obj.wateringFrequency;
+    size_t len;
+    is >> len;
+    delete[] obj.type;
+    obj.type = new char[len + 1];
+    is.ignore();
+    is.getline(obj.type, len + 1);
 
     return is;
     

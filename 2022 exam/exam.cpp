@@ -82,7 +82,7 @@ class VehicleList {
 
         for (size_t i = 0; i < count; i++) {
 
-            delete[] vehicles[i];
+            delete vehicles[i];
 
         }
 
