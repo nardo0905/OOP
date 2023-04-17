@@ -15,7 +15,6 @@ private:
 
     void sort();
     void updateFile();
-    bool exists(const Plant&);
 
     void copy(const PlantsBook&);
     void copyMove(PlantsBook&&);
@@ -23,7 +22,8 @@ private:
 
 public:
 
-    PlantsBook(const char* filename = "");
+    PlantsBook();
+    PlantsBook(const char* /*filename = ""*/);
     PlantsBook(const PlantsBook&);
     PlantsBook(PlantsBook&&);
     ~PlantsBook();
@@ -31,6 +31,10 @@ public:
     PlantsBook& operator=(const PlantsBook&);
     PlantsBook& operator=(PlantsBook&&);
 
+    size_t getCount() const;
+    const Plant& getPlant(const int) const;
+
+    bool exists(const Plant&);
     void addPlant(Plant&);
 
 };
@@ -87,6 +91,8 @@ void PlantsBook::copy(const PlantsBook& other) {
     strcpy(this->bookName, other.bookName);
     this->plantsCount = other.plantsCount;
 
+    plants = new Plant*[plantsCount];
+
     for (size_t i = 0; i < plantsCount; i++) {
 
         plants[i] = new Plant{*other.plants[i]};
@@ -99,27 +105,17 @@ void PlantsBook::copyMove(PlantsBook&& other) {
 
     strcpy(this->bookName, other.bookName);
     this->plantsCount = other.plantsCount;
-    // for (size_t i = 0; i < plantsCount; i++) {
-
-    //     this->plants[i] = other.plants[i];
-
-    // }
     this->plants = other.plants;
 
     strcpy(other.bookName, "");
     other.plantsCount = 0;
-    // for (size_t i = 0; i < plantsCount; i++) {
-
-    //     other.plants[i] = nullptr;
-
-    // }
     other.plants = nullptr;
     
 }
 
 void PlantsBook::deletePlantBook() {
 
-    for (size_t i = 0; i < plantsCount; i++) {
+    for (size_t i = 0; plants != nullptr && i < plantsCount; i++) {
 
         delete plants[i];
 
@@ -129,10 +125,20 @@ void PlantsBook::deletePlantBook() {
     
 }
 
-PlantsBook::PlantsBook(const char* filename) : plantsCount(0) {
+PlantsBook::PlantsBook() {
+
+    strcpy(this->bookName, "");
+    plants = nullptr;
+    plantsCount = 0;
+
+}
+
+PlantsBook::PlantsBook(const char* filename) {
 
     strcpy(this->bookName, filename);
-    plants = new Plant*[plantsCount];
+    //plants = new Plant*[plantsCount];
+    plants = nullptr;
+    plantsCount = 0;
     
 }
 
@@ -180,6 +186,18 @@ PlantsBook& PlantsBook::operator=(PlantsBook&& that) {
     
 }
 
+size_t PlantsBook::getCount() const {
+
+    return plantsCount;
+
+}
+
+const Plant& PlantsBook::getPlant(const int index) const {
+
+    return *plants[index];
+
+}
+
 void PlantsBook::addPlant(Plant& plant) {
 
     if(exists(plant)) throw "Plant type already exists!";
@@ -198,6 +216,20 @@ void PlantsBook::addPlant(Plant& plant) {
 
     Plant** temp = new Plant*[plantsCount + 1];
 
+    if (plantsCount == 0) {
+
+        temp[0] = new Plant{plant};
+        plantsCount++;
+
+        deletePlantBook();
+        plants = temp;
+        temp = nullptr;
+
+        updateFile();
+        return;
+
+    }
+
     for (size_t i = 0; i < plantsCount; i++) {
 
         temp[i] = new Plant{*plants[i]};
@@ -209,6 +241,7 @@ void PlantsBook::addPlant(Plant& plant) {
 
     deletePlantBook();
     plants = temp;
+    temp = nullptr;
 
     sort();
     updateFile();

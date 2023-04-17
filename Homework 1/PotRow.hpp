@@ -17,7 +17,8 @@ private:
 
 public:
 
-    PotRow(const size_t count = 0);
+    PotRow();
+    PotRow(const size_t /*size = 0*/);
     PotRow(const PotRow&);
     PotRow(PotRow&&);
     ~PotRow();
@@ -25,7 +26,12 @@ public:
     PotRow& operator=(const PotRow&);
     PotRow& operator=(PotRow&&);
 
-    void addPlant();
+    void addPlant(const Plant&);
+    const Plant removePlant(const size_t);
+    bool hasSpace() const;
+    int plantCount() const;
+
+    friend std::ostream& operator<<(std::ostream&, const PotRow&);
 
 };
 
@@ -34,6 +40,7 @@ void PotRow::deletePotRow() {
     for (size_t i = 0; i < count; i++) {
 
         delete plants[i];
+        // if (plants[i] != nullptr) delete plants[i];
 
     }
 
@@ -44,6 +51,7 @@ void PotRow::deletePotRow() {
 void PotRow::copy(const PotRow& other) {
 
     this->count = other.count;
+    this->plants = new Plant*[this->count];
 
     for (size_t i = 0; i < count; i++) {
 
@@ -69,6 +77,13 @@ void PotRow::copyMove(PotRow&& other) {
 
     other.count = 0;
     other.plants = nullptr;
+
+}
+
+PotRow::PotRow() {
+
+    plants = nullptr;
+    count = 0;
 
 }
 
@@ -119,6 +134,82 @@ PotRow& PotRow::operator=(PotRow&& other) {
     }
 
     return *this;
+
+}
+
+void PotRow::addPlant(const Plant& plant) {
+
+    bool found = false;
+
+    for (size_t i = 0; i < count; i++) {
+
+        if (plants[i] == nullptr) {
+
+            plants[i] = new Plant{plant};
+            found = true;
+            break;
+
+        }
+
+    }
+
+    if (!found) throw "No place found for the plant!";
+
+}
+
+const Plant PotRow::removePlant(const size_t pos) {
+
+    if (pos < 0 || pos >= count) throw "Index out of bounds!";
+    Plant temp = {*plants[pos]};
+    plants[pos] = nullptr;
+
+    return temp;
+
+}
+
+bool PotRow::hasSpace() const {
+
+    for (size_t i = 0; i < count; i++) {
+
+        if (plants[i] == nullptr) {
+
+            return true;
+
+        }
+
+    }
+
+    return false;
+
+}
+
+int PotRow::plantCount() const {
+
+    int pCount = 0;
+
+    for (size_t i = 0; i < count; i++) {
+
+        if (plants[i] != nullptr) pCount++;
+
+    }
+
+    return pCount;
+
+}
+
+std::ostream& operator<<(std::ostream& os, const PotRow& obj) {
+
+    for (size_t i = 0; i < obj.count; i++) {
+
+        if (obj.plants[i] != nullptr) {
+
+            os << *obj.plants[i] << '\n';
+
+        }
+
+    }
+
+    return os;
 
 }
 
