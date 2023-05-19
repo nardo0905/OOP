@@ -17,8 +17,8 @@ int main() {
 
         // std::cout << (char)('A' + i) << " -> " << ccTest.encrypt('A' + i) << std::endl;
         // std::cout << (char)('A' + i) << " -> " << pcTest.encrypt('A' + i) << std::endl;
-        // std::cout << (char)('A' + i) << " -> " << rfTest.encrypt('A' + i) << std::endl;
-        std::cout << (char)('A' + i) << " -> " << pbTest.encrypt('A' + i) << std::endl;
+        std::cout << (char)('A' + i) << " -> " << rfTest.encrypt('A' + i) << std::endl;
+        // std::cout << (char)('A' + i) << " -> " << pbTest.encrypt('A' + i) << std::endl;
 
     }
 
