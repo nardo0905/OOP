@@ -31,7 +31,7 @@ void ComponentCollection::copy(const ComponentCollection& other) {
 
     for (ComponentBase* comp : other.components) {
 
-        components.push_back(comp->copy());
+        components.push_back(comp->clone());
 
     }
     
