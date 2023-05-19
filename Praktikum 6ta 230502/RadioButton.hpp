@@ -17,7 +17,7 @@ public:
     RadioButton(const float, const float, const char*, const bool);
 
     void showDialog();
-    ComponentBase* copy() const;
+    ComponentBase* clone() const;
 
     void flip();
     bool isOn() const;
@@ -46,7 +46,7 @@ void RadioButton::showDialog() {
     
 }
 
-ComponentBase* RadioButton::copy() const {
+ComponentBase* RadioButton::clone() const {
 
     return new RadioButton{*this};
     

@@ -16,7 +16,7 @@ public:
     TextBox(const float, const float, std::string&);
 
     void showDialog();
-    ComponentBase* copy() const;
+    ComponentBase* clone() const;
 
 };
 
@@ -35,7 +35,7 @@ void TextBox::showDialog() {
     
 }
 
-ComponentBase* TextBox::copy() const {
+ComponentBase* TextBox::clone() const {
 
     return new TextBox{*this};
     

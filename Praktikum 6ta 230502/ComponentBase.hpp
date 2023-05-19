@@ -16,7 +16,7 @@ public:
     void move(const float, const float);
 
     virtual void showDialog() = 0;
-    virtual ComponentBase* copy() const = 0;
+    virtual ComponentBase* clone() const = 0;
 
 };
 

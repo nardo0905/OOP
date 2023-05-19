@@ -16,7 +16,7 @@ public:
     Label(const float x, const float y, const char* text);
 
     void showDialog();
-    ComponentBase* copy() const;
+    ComponentBase* clone() const;
 
 };
 
@@ -44,7 +44,7 @@ void Label::showDialog() {
     
 }
 
-ComponentBase* Label::copy() const {
+ComponentBase* Label::clone() const {
 
     return new Label{*this};
     
