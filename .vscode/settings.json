@@ -67,6 +67,8 @@
         "__verbose_abort": "cpp",
         "bit": "cpp",
         "filesystem": "cpp",
-        "__memory": "cpp"
+        "__memory": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp"
     }
 }

@@ -1,0 +1,3 @@
+Model: Porsche Taycan, Range: 500, Seats: 5
+Model: MAN, Range: 1000, Loading capacity: 200
+Model: Ford 150, Range: 700, Seats: 3, Loading capacity: 300
