@@ -80,10 +80,9 @@ Car& Car::operator=(const Car& other) { // operator =
 
     if (this != &other) {
 
+        Vehicle::operator=(other);
         deleteCar();
         copyCar(other);
-        this->setModel(other.getModel());
-        this->setRange(other.getRange());
 
     }
 
@@ -108,7 +107,7 @@ void Car::removePassenger(const char* person) {
     bool found = false;
 
     // proverqvame dali ima passengera, ako go nqma hvurlqme greshka
-    for (const char* p : passengers) {
+    for (char* p : passengers) {
 
         if (!strcmp(person, p)) { // strcmp vrushta 0 ako dvata niza sa ednakvi, zatova slagame !
 
@@ -144,12 +143,12 @@ const std::vector<char*>& Car::getPassengerList() const {
 
 }
 
-Vehicle* Car::clone() const {
+// Vehicle* Car::clone() const {
 
-    // taka klonirame obekt, zabeleji che tipa koito vrushtame e Vehicle* no pishem return new CAR
-    return new Car{*this};
+//     // taka klonirame obekt, zabeleji che tipa koito vrushtame e Vehicle* no pishem return new CAR
+//     return new Car{*this};
 
-}
+// }
 
 void Car::write(std::ofstream& os) const {
 
